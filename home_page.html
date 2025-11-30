@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Survey Management System</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fc;
+        }
+
+       
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #6c7a7d;
+            padding: 15px 40px;
+        }
+
+        .navbar .logo {
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 25px;
+        }
+
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+
+        .navbar ul li a:hover {
+            background: #556264;
+        }
+        .hero {
+            text-align: center;
+            padding: 150px ;
+            
+        }
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 15px;
+            color: #2d3e3f;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #555;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .hero .btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #6c7a7d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .hero .btn:hover {
+            background: #556264;
+        }
+
+       
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="logo">Survey Management System</div>
+        <ul>
+            <li><a href="home_page.html">Home</a></li>
+            <li><a href="dashboard_admin.html">Dashboard</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+
+    <section class="hero">
+        <h1>Welcome to the Online Survey Management System</h1>
+        <p>
+            Create, manage, and analyze surveys with ease.  
+            This platform helps administrators collect valuable feedback efficiently.
+        </p>
+
+        <button class="btn" onclick="window.location.href='dashboard_admin.html'">
+            Go to Dashboard
+        </button>
+    </section>
+
+    
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Survey Manager</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    h2 { margin-bottom: 10px; }
+    input, textarea { width: 100%; padding: 8px; margin: 5px 0 15px; }
+    button { padding: 8px 16px; margin-right: 10px; cursor: pointer; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    .actions button { margin-right: 5px; }
+</style>
+</head>
+<body>
+
+<h2>Survey Manager</h2>
+
+<!-- FORM -->
+<div id="formSection">
+    <h3 id="formTitle">Create New Survey</h3>
+
+    <input type="hidden" id="surveyId">
+
+    <label>Survey Title:</label>
+    <input type="text" id="title">
+
+    <label>Description:</label>
+    <textarea id="description" rows="3"></textarea>
+
+    <button onclick="saveSurvey()">Save Survey</button>
+    <button onclick="resetForm()">Cancel</button>
+</div>
+
+<!-- TABLE -->
+<h3>All Surveys</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th width="160">Actions</th>
+        </tr>
+    </thead>
+    <tbody id="surveyTable"></tbody>
+</table>
+
+<script>
+   
+    let surveys = JSON.parse(localStorage.getItem("surveys") || "[]");
+
+    function renderTable() {
+        const table = document.getElementById("surveyTable");
+        table.innerHTML = "";
+
+        surveys.forEach((s, index) => {
+            table.innerHTML += `
+                <tr>
+                    <td>${s.title}</td>
+                    <td>${s.description}</td>
+                    <td class="actions">
+                        <button onclick="editSurvey(${index})">Edit</button>
+                        <button onclick="deleteSurvey(${index})" style="background:red;color:white;">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    function saveSurvey() {
+        const id = document.getElementById("surveyId").value;
+        const title = document.getElementById("title").value.trim();
+        const description = document.getElementById("description").value.trim();
+
+        if (!title) {
+            alert("Title is required!");
+            return;
+        }
+
+        const surveyData = { title, description };
+
+        if (id) {
+            // Update
+            surveys[id] = surveyData;
+        } else {
+            // Create
+            surveys.push(surveyData);
+        }
+
+        localStorage.setItem("surveys", JSON.stringify(surveys));
+        resetForm();
+        renderTable();
+    }
+
+    function editSurvey(index) {
+        const s = surveys[index];
+        document.getElementById("surveyId").value = index;
+        document.getElementById("title").value = s.title;
+        document.getElementById("description").value = s.description;
+
+        document.getElementById("formTitle").innerText = "Edit Survey";
+    }
+
+    function deleteSurvey(index) {
+        if (confirm("Delete this survey?")) {
+            surveys.splice(index, 1);
+            localStorage.setItem("surveys", JSON.stringify(surveys));
+            renderTable();
+        }
+    }
+
+    function resetForm() {
+        document.getElementById("surveyId").value = "";
+        document.getElementById("title").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("formTitle").innerText = "Create New Survey";
+    }
+
+    // Render table on page load
+    renderTable();
+</script>
+
+</body>
+</html>

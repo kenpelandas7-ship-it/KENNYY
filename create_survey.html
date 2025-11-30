@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Survey</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #8fa3b0, #90a9d8);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        margin-top: 30px;
+        font-size: 36px;
+        color: #333;
+    }
+
+    .top-actions {
+        margin-top: 20px;
+        width: 80%;
+        max-width: 700px;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .survey-container {
+        width: 80%;
+        max-width: 700px;
+        margin-top: 20px;
+    }
+
+    .question-box {
+        background: white;
+        padding: 18px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+        position: relative;
+    }
+
+    .delete-btn {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        background: red;
+        border: none;
+        color: white;
+        border-radius: 100%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: px;
+        font-weight: bold;
+        
+    }
+
+    select, input[type="text"] {
+        width: 90%;
+        padding: 10px;
+        font-size: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #bbb;
+        border-radius: 5px;
+    }
+
+    .option-box {
+        margin-top: 10px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .option-box input {
+        flex: 1;
+    }
+
+    button {
+        padding: 10px 18px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .bottom-save {
+        margin: 40px 0;
+    }
+</style>
+</head>
+<body>
+
+<h1>Create Survey Questions</h1>
+
+
+<div class="top-actions">
+    <button onclick="addQuestion()">+ Add Question</button>
+</div>
+
+<div class="survey-container" id="surveyContainer"></div>
+<template id="questionTemplate">
+    <div class="question-box">
+        <button class="delete-btn" onclick="deleteQuestion(this)">X</button>
+
+        <label class="question-label"><b>Question</b></label>
+        <input type="text" class="question-text" placeholder="Enter question text">
+
+        <label style="margin-top:12px;">Select Question Type:</label>
+        <select class="question-type" onchange="toggleOptions(this)">
+            <option value="short">Short Answer</option>
+            <option value="multiple">Multiple Choice</option>
+        </select>
+
+        <div class="options-container" style="display:none; margin-top:10px;">
+            <button class="add-option-btn" onclick="addOption(this)" type="button">+ Add Option</button>
+            <div class="options-list"></div>
+        </div>
+    </div>
+</template>
+
+<div class="bottom-save">
+    <button onclick="saveSurvey()">Save Survey</button>
+</div>
+
+<script>
+let questionCount = 0;
+
+function addQuestion() {
+    questionCount++;
+
+    const template = document.getElementById("questionTemplate");
+    const clone = template.content.cloneNode(true);
+
+    // Update question number label
+    clone.querySelector(".question-label").textContent = `Question ${questionCount}`;
+
+    document.getElementById("surveyContainer").appendChild(clone);
+}
+
+function deleteQuestion(button) {
+    button.parentElement.remove();
+}
+
+function toggleOptions(selectElement) {
+    const optionsContainer = selectElement.parentElement.querySelector(".options-container");
+    optionsContainer.style.display = selectElement.value === "multiple" ? "block" : "none";
+}
+
+function addOption(button) {
+    const optionsList = button.parentElement.querySelector(".options-list");
+
+    const optionBox = document.createElement("div");
+    optionBox.className = "option-box";
+    optionBox.innerHTML = `
+        <input type="text" class="option-text" placeholder="Option text">
+        <button onclick="this.parentElement.remove()" type="button">X</button>
+    `;
+
+    optionsList.appendChild(optionBox);
+}
+
+function saveSurvey() {
+    const questionsData = [];
+    const boxes = document.querySelectorAll(".question-box");
+
+    boxes.forEach((box, index) => {
+        const questionText = box.querySelector(".question-text").value.trim();
+        const type = box.querySelector(".question-type").value;
+
+        if (!questionText) return;
+
+        const questionObj = {
+            number: index + 1,
+            question: questionText,
+            type: type
+        };
+
+        if (type === "multiple") {
+            const options = [...box.querySelectorAll(".option-text")]
+                .map(opt => opt.value.trim())
+                .filter(opt => opt);
+            questionObj.options = options;
+        }
+
+        questionsData.push(questionObj);
+    });
+
+    console.log("Saved Survey:", questionsData);
+    alert("Survey Saved! Check console for output.");
+}
+</script>
+
+</body>
+</html>

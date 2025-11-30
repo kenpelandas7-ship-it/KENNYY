@@ -1,0 +1,100 @@
+/* Background & page layout */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #7a8885, #98b3f4);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Main container */
+#main {
+    background: #fff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.15);
+    width: 360px;
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Title */
+h2 {
+    margin-bottom: 25px;
+    color: #222;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Input labels */
+form label {
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Input fields */
+form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: 0.25s;
+    font-size: 14px;
+}
+
+form input:focus {
+    border-color: #7b9cf3;
+    box-shadow: 0 0 4px rgba(123, 156, 243, 0.4);
+    outline: none;
+}
+
+/* Button */
+#signupButton {
+    width: 100%;
+    padding: 12px;
+    background: #9aaef2;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+#signupButton:hover {
+    background: #8698d4;
+}
+
+/* Login link */
+#loginLink {
+    display: block;
+    margin-top: 12px;
+    color: #40c5ad;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+#loginLink:hover {
+    text-decoration: underline;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
